@@ -33,7 +33,7 @@ class TopoGraphDataset:
         """
         Initializes the dataset. If it's a Planetoid dataset (Cora, PubMed, Citeseer),
         it loads from PyG's built-in Planetoid datasets. Otherwise, it uses TUDataset.
-
+ 
         Args:
             name (str): Name of the dataset to load. Default is 'Cora'.
         """
