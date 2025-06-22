@@ -1,0 +1,19 @@
+name: topoGAT
+channels:
+  - conda-forge
+  - pytorch
+  - defaults
+
+dependencies:
+  - python=3.10
+  - pip
+  - numpy
+  - scikit-learn
+  - matplotlib
+  - networkx
+  - pytorch
+  - torchvision
+  - torchaudio
+  - pip:
+      - torch-geometric
+      - gudhi

@@ -1,7 +1,10 @@
 torch
+scikit-learn
 torch_geometric
 gudhi
-numpy
-scikit-learn
+PyYAML
+wandb
+unittest2
 matplotlib
 networkx
+numpy
