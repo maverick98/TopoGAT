@@ -217,7 +217,7 @@ class TopologyProcessor:
 Definition:
 
 Given a set of points X in a metric space and a radius ϵ, the Čech complex includes a k-simplex 
-whenever the (k+1)(k+1) balls of radius ϵϵ centered at the points have a non-empty common intersection.
+whenever the (k+1) balls of radius ϵϵ centered at the points have a non-empty common intersection.
 Key Property:
 
     The Čech complex accurately recovers the underlying topology of the data (nerve theorem).
