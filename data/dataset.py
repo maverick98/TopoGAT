@@ -37,22 +37,23 @@ class TopoGraphDataset:
         Args:
             name (str): Name of the dataset to load. Default is 'Cora'.
         """
-        if name in ["Cora", "PubMed", "Citeseer"]:
-            self.dataset = Planetoid(root=f'data/{name}', name=name, transform=NormalizeFeatures())
+
         '''
             If the dataset is one of the Planetoid ones, it uses the Planetoid loader.
             Applies feature normalization as a preprocessing transform.
             Downloads the dataset into the data/{name} directory if not already present.
-        '''    
+
+            If it's not Planetoid, it assumes a TU Dortmund dataset and loads it similarly.
+        '''  
+        if name in ["Cora", "PubMed", "Citeseer"]:
+            self.dataset = Planetoid(root=f'data/{name}', name=name, transform=NormalizeFeatures())
+          
         else:
             self.dataset = TUDataset(root=f'data/{name}', name=name)
-            '''
-                If it's not Planetoid, it assumes a TU Dortmund dataset and loads it similarly.
-            '''
+            
         self.processor = TopologyProcessor()
-        '''
-            Creates an instance of your TopologyProcessor to compute persistent homology features.
-        '''
+        #Creates an instance of your TopologyProcessor to compute persistent homology features.
+        
 
     def get_data(self):
          """
