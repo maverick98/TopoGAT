@@ -1,0 +1,65 @@
+ Saved summary to /content/drive/MyDrive/topogat/PTC_MR/node_aware/summary_topogat.csv
+ Saved summary to /content/drive/MyDrive/topogat/PTC_MR/node_aware/summary_gat.csv
+ Exported LaTeX table to /content/drive/MyDrive/topogat/PTC_MR/node_aware/topogat_table.tex
+ Exported LaTeX table to /content/drive/MyDrive/topogat/PTC_MR/node_aware/gat_table.tex
+ Exported comparison summary to /content/drive/MyDrive/topogat/PTC_MR/node_aware/comparison_summary.csv
+ Representative Seed: 6 (Closest accuracy to mean 0.5819)
+ Representative Metrics: {'accuracy': 0.5797101449275363, 'precision': 0.7661290322580645, 'recall': 0.5972222222222222, 'f1': 0.5101591187270502, 'roc_auc': np.float64(0.6119528619528619), 'log_loss': 0.7327967325761551}
+ Representative Seed: 0 (Closest accuracy to mean 0.5522)
+ Representative Metrics: {'accuracy': 0.5507246376811594, 'precision': 0.532608695652174, 'recall': 0.5294871794871795, 'f1': 0.5251942286348501, 'roc_auc': np.float64(0.5628205128205128), 'log_loss': 0.6501420129355313}
+
+Classification Report:
+
+              precision    recall  f1-score   support
+
+           0       0.73      0.94      0.82        49
+           1       0.50      0.15      0.23        20
+
+    accuracy                           0.71        69
+   macro avg       0.62      0.54      0.53        69
+weighted avg       0.66      0.71      0.65        69
+
+ Saved confusion matrix to /content/drive/MyDrive/topogat/PTC_MR/node_aware/seed_6/confusion_topogat_rep_6.png
+ Saved PR curve to /content/drive/MyDrive/topogat/PTC_MR/node_aware/seed_6/pr_curve_topogat_rep_6.png
+
+Classification Report:
+
+              precision    recall  f1-score   support
+
+           0       0.59      0.69      0.64        39
+           1       0.48      0.37      0.42        30
+
+    accuracy                           0.55        69
+   macro avg       0.53      0.53      0.53        69
+weighted avg       0.54      0.55      0.54        69
+
+ Saved confusion matrix to /content/drive/MyDrive/topogat/PTC_MR/node_aware/seed_0/confusion_gat_rep_0.png
+ Saved PR curve to /content/drive/MyDrive/topogat/PTC_MR/node_aware/seed_0/pr_curve_gat_rep_0.png
+Saved statistical comparison to /content/drive/MyDrive/topogat/PTC_MR/node_aware/paired_ttest_results.txt
+Saved boxplot to /content/drive/MyDrive/topogat/PTC_MR/node_aware/metric_comparison_boxplot.png
+
+All analysis completed and saved.
+----- Paired T-Test Results -----
+===== Paired t-tests on TopoGAT vs GAT for accuracy =====
+T=3.2526, p-value=0.0042, Cohen's d=0.5936
+
+===== Paired t-tests on TopoGAT vs GAT for precision =====
+T=0.1160, p-value=0.9089, Cohen's d=0.0353
+
+===== Paired t-tests on TopoGAT vs GAT for recall =====
+T=3.7758, p-value=0.0013, Cohen's d=0.8515
+
+===== Paired t-tests on TopoGAT vs GAT for f1 =====
+T=5.0054, p-value=0.0001, Cohen's d=1.2699
+
+
+
+----- Comparison Summary (CSV) -----
+,TopoGAT,GAT
+accuracy,0.5819 ± 0.0514,0.5522 ± 0.0497
+precision,0.5924 ± 0.0704,0.5900 ± 0.1103
+recall,0.5570 ± 0.0395,0.5242 ± 0.0372
+f1,0.5250 ± 0.0561,0.4555 ± 0.0616
+roc_auc,0.5646 ± 0.0586,0.5511 ± 0.0683
+log_loss,0.7897 ± 0.1236,0.6951 ± 0.0417
+

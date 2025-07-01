@@ -1,0 +1,12 @@
+===== Paired t-tests on TopoGAT vs GIN for accuracy =====
+T=-8.7431, p-value=0.0000, Cohen's d=-1.6822
+
+===== Paired t-tests on TopoGAT vs GIN for precision =====
+T=-3.9127, p-value=0.0009, Cohen's d=-0.9759
+
+===== Paired t-tests on TopoGAT vs GIN for recall =====
+T=-6.9764, p-value=0.0000, Cohen's d=-1.6074
+
+===== Paired t-tests on TopoGAT vs GIN for f1 =====
+T=-8.8958, p-value=0.0000, Cohen's d=-1.9390
+

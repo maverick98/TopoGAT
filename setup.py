@@ -14,6 +14,6 @@ setup(
         'tqdm'
     ],
     author='Your Name',
-    description='TopoGAT: Topological Attention for Graph Representation Learning',
+    description='TopoGAT: Topological Attention for Graph Representation Learning using Persistent Homology',
     license='Apache 2.0',
 )

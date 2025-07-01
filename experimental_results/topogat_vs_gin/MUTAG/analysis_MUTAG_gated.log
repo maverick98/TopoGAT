@@ -1,0 +1,65 @@
+ Saved summary to /content/drive/MyDrive/topogat_vs_gin/MUTAG/gated_vs_gin/summary_topogat.csv
+ Saved summary to /content/drive/MyDrive/topogat_vs_gin/MUTAG/gated_vs_gin/summary_gin.csv
+ Exported LaTeX table to /content/drive/MyDrive/topogat_vs_gin/MUTAG/gated_vs_gin/topogat_table.tex
+ Exported LaTeX table to /content/drive/MyDrive/topogat_vs_gin/MUTAG/gated_vs_gin/gin_table.tex
+ Exported comparison summary to /content/drive/MyDrive/topogat_vs_gin/MUTAG/gated_vs_gin/comparison_summary.csv
+ Representative Seed: 1 (Closest accuracy to mean 0.8289)
+ Representative Metrics: {'accuracy': 0.8157894736842105, 'precision': 0.8409961685823755, 'recall': 0.7648809523809523, 'f1': 0.7817883511074651, 'roc_auc': np.float64(0.9613095238095237), 'log_loss': 0.337730899311288}
+ Representative Seed: 1 (Closest accuracy to mean 0.8566)
+ Representative Metrics: {'accuracy': 0.868421052631579, 'precision': 0.8565217391304347, 'recall': 0.8660714285714286, 'f1': 0.8606016140865738, 'roc_auc': np.float64(0.9613095238095238), 'log_loss': 0.2931228620043225}
+
+Classification Report:
+
+              precision    recall  f1-score   support
+
+           0       0.92      0.69      0.79        16
+           1       0.81      0.95      0.88        22
+
+    accuracy                           0.84        38
+   macro avg       0.86      0.82      0.83        38
+weighted avg       0.85      0.84      0.84        38
+
+ Saved confusion matrix to /content/drive/MyDrive/topogat_vs_gin/MUTAG/gated_vs_gin/seed_1/confusion_topogat_rep_1.png
+ Saved PR curve to /content/drive/MyDrive/topogat_vs_gin/MUTAG/gated_vs_gin/seed_1/pr_curve_topogat_rep_1.png
+
+Classification Report:
+
+              precision    recall  f1-score   support
+
+           0       0.86      0.75      0.80        16
+           1       0.83      0.91      0.87        22
+
+    accuracy                           0.84        38
+   macro avg       0.85      0.83      0.83        38
+weighted avg       0.84      0.84      0.84        38
+
+ Saved confusion matrix to /content/drive/MyDrive/topogat_vs_gin/MUTAG/gated_vs_gin/seed_1/confusion_gin_rep_1.png
+ Saved PR curve to /content/drive/MyDrive/topogat_vs_gin/MUTAG/gated_vs_gin/seed_1/pr_curve_gin_rep_1.png
+Saved statistical comparison to /content/drive/MyDrive/topogat_vs_gin/MUTAG/gated_vs_gin/paired_ttest_results.txt
+Saved boxplot to /content/drive/MyDrive/topogat_vs_gin/MUTAG/gated_vs_gin/metric_comparison_boxplot.png
+
+All analysis completed and saved.
+----- Paired T-Test Results -----
+===== Paired t-tests on TopoGAT vs GIN for accuracy =====
+T=-1.7364, p-value=0.0987, Cohen's d=-0.4457
+
+===== Paired t-tests on TopoGAT vs GIN for precision =====
+T=-0.7012, p-value=0.4917, Cohen's d=-0.1846
+
+===== Paired t-tests on TopoGAT vs GIN for recall =====
+T=-2.2521, p-value=0.0363, Cohen's d=-0.6464
+
+===== Paired t-tests on TopoGAT vs GIN for f1 =====
+T=-1.9386, p-value=0.0676, Cohen's d=-0.5080
+
+
+
+----- Comparison Summary (CSV) -----
+,TopoGAT,GAT
+accuracy,0.8289 ± 0.0636,0.8566 ± 0.0576
+precision,0.8307 ± 0.0743,0.8441 ± 0.0632
+recall,0.7941 ± 0.0723,0.8396 ± 0.0704
+f1,0.7980 ± 0.0756,0.8354 ± 0.0673
+roc_auc,0.9333 ± 0.0373,0.9321 ± 0.0401
+log_loss,0.3555 ± 0.1122,0.3549 ± 0.1516
+

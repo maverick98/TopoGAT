@@ -1,0 +1,65 @@
+ Saved summary to /content/drive/MyDrive/topogat_vs_gin/PROTEINS/node_aware_vs_gin/summary_topogat.csv
+ Saved summary to /content/drive/MyDrive/topogat_vs_gin/PROTEINS/node_aware_vs_gin/summary_gin.csv
+ Exported LaTeX table to /content/drive/MyDrive/topogat_vs_gin/PROTEINS/node_aware_vs_gin/topogat_table.tex
+ Exported LaTeX table to /content/drive/MyDrive/topogat_vs_gin/PROTEINS/node_aware_vs_gin/gin_table.tex
+ Exported comparison summary to /content/drive/MyDrive/topogat_vs_gin/PROTEINS/node_aware_vs_gin/comparison_summary.csv
+ Representative Seed: 0 (Closest accuracy to mean 0.7099)
+ Representative Metrics: {'accuracy': 0.7085201793721974, 'precision': 0.6937428243398392, 'recall': 0.6718723476489561, 'f1': 0.6766601976399206, 'roc_auc': np.float64(0.7176200984552707), 'log_loss': 0.6439021135925213}
+ Representative Seed: 10 (Closest accuracy to mean 0.7058)
+ Representative Metrics: {'accuracy': 0.7040358744394619, 'precision': 0.6974285714285715, 'recall': 0.6994474682500412, 'f1': 0.6982037401574803, 'roc_auc': np.float64(0.7782863269008743), 'log_loss': 0.5824189053691813}
+
+Classification Report:
+
+              precision    recall  f1-score   support
+
+           0       0.73      0.83      0.78       137
+           1       0.66      0.51      0.58        86
+
+    accuracy                           0.71       223
+   macro avg       0.69      0.67      0.68       223
+weighted avg       0.70      0.71      0.70       223
+
+ Saved confusion matrix to /content/drive/MyDrive/topogat_vs_gin/PROTEINS/node_aware_vs_gin/seed_0/confusion_topogat_rep_0.png
+ Saved PR curve to /content/drive/MyDrive/topogat_vs_gin/PROTEINS/node_aware_vs_gin/seed_0/pr_curve_topogat_rep_0.png
+
+Classification Report:
+
+              precision    recall  f1-score   support
+
+           0       0.76      0.76      0.76       136
+           1       0.62      0.62      0.62        87
+
+    accuracy                           0.70       223
+   macro avg       0.69      0.69      0.69       223
+weighted avg       0.70      0.70      0.70       223
+
+ Saved confusion matrix to /content/drive/MyDrive/topogat_vs_gin/PROTEINS/node_aware_vs_gin/seed_10/confusion_gin_rep_10.png
+ Saved PR curve to /content/drive/MyDrive/topogat_vs_gin/PROTEINS/node_aware_vs_gin/seed_10/pr_curve_gin_rep_10.png
+Saved statistical comparison to /content/drive/MyDrive/topogat_vs_gin/PROTEINS/node_aware_vs_gin/paired_ttest_results.txt
+Saved boxplot to /content/drive/MyDrive/topogat_vs_gin/PROTEINS/node_aware_vs_gin/metric_comparison_boxplot.png
+
+All analysis completed and saved.
+----- Paired T-Test Results -----
+===== Paired t-tests on TopoGAT vs GIN for accuracy =====
+T=0.4059, p-value=0.6893, Cohen's d=0.1048
+
+===== Paired t-tests on TopoGAT vs GIN for precision =====
+T=3.2052, p-value=0.0047, Cohen's d=0.6483
+
+===== Paired t-tests on TopoGAT vs GIN for recall =====
+T=-1.4741, p-value=0.1568, Cohen's d=-0.4758
+
+===== Paired t-tests on TopoGAT vs GIN for f1 =====
+T=-1.4461, p-value=0.1645, Cohen's d=-0.4329
+
+
+
+----- Comparison Summary (CSV) -----
+,TopoGAT,GIN
+accuracy,0.7099 ± 0.0395,0.7058 ± 0.0291
+precision,0.7218 ± 0.0455,0.6931 ± 0.0409
+recall,0.6622 ± 0.0288,0.6756 ± 0.0366
+f1,0.6613 ± 0.0374,0.6771 ± 0.0374
+roc_auc,0.7169 ± 0.0400,0.7209 ± 0.0403
+log_loss,0.5886 ± 0.0295,0.6061 ± 0.0309
+

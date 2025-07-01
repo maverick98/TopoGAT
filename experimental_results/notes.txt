@@ -1,0 +1,130 @@
+📂 MUTAG
+
+    Variant: Basic (aka Concat)
+
+        ✅ Representative Seed: 0
+
+        ✅ Metrics: accuracy: 0.8921, precision: 0.8936, recall: 0.8913, f1: 0.8915, roc_auc: 0.9021, log_loss: 0.2861
+
+        ✅ Source: Shared block for “Representative Seed: 0 (Closest accuracy to mean 0.8921)”, followed by summary table
+
+    Variant: Node-aware
+
+        ✅ Representative Seed: 7
+
+        ✅ Metrics: 0.8861 ± 0.0226 etc.
+
+        ✅ Source: Seed 7 with summary block for node-aware
+
+    Variant: Gated
+
+        ✅ Representative Seed: 8
+
+        ✅ Source block confirmed: seed 8 metrics block and corresponding CSV-style table
+
+    Variant: Attn
+
+        ✅ Representative Seed: 6
+
+        ✅ Source: Seed 6 block and summary
+
+    Baseline: GAT
+
+        ✅ Averaged across the 4 GAT counterparts in each comparison (mean of GAT entries)
+
+        ✅ Source: Derived by averaging GAT metrics listed in each paired comparison
+
+📂 PTC_MR
+
+    Variant: Basic (aka Concat)
+
+        ✅ Representative Seed: 3
+
+        ✅ Source: “Representative Seed: 3 (Closest accuracy to mean 0.6379)” block
+
+    Variant: Node-aware
+
+        ✅ Representative Seed: 4
+
+        ✅ Source: “Representative Seed: 4 (Closest accuracy to mean 0.6171)”
+
+    Variant: Gated
+
+        ✅ Representative Seed: 5
+
+        ✅ Source block with Seed 5 and table values
+
+    Variant: Attn
+
+        ✅ Representative Seed: 6
+
+        ✅ Confirmed from your logs and summary
+
+    Baseline: GAT
+
+        ✅ Average of GAT metrics from the 4 comparisons (seeds 3, 4, 5, 6)
+
+        ✅ Values rounded from calculated mean
+
+📂 PROTEINS
+
+    Variant: Basic (aka Concat)
+
+        ✅ Representative Seed: 0
+
+        ✅ Source block: Seed 0 “Closest accuracy to mean 0.7101”
+
+    Variant: Node-aware
+
+        ✅ Representative Seed: 14
+
+        ✅ From Seed 14 block and CSV-style stats
+
+    Variant: Gated
+
+        ✅ Representative Seed: 7
+
+        ✅ Source: Seed 7 block
+
+    Variant: Attn
+
+        ✅ Representative Seed: 10
+
+        ✅ Source: Seed 10 block
+
+    Baseline: GAT
+
+        ✅ Averaged from GAT stats across seeds 0, 14, 7, 10
+
+        ✅ Recomputed if needed
+
+📂 ENZYMES
+
+    Variant: Basic (aka Concat)
+
+        ✅ Representative Seed: 6
+
+        ✅ Source block with metrics and summary
+
+    Variant: Node-aware
+
+        ✅ Representative Seed: 2
+
+        ✅ Sourced from Seed 2 entry
+
+    Variant: Gated
+
+        ✅ Representative Seed: 6
+
+        ✅ Clearly marked in your message: “Representative Seed: 6 (Closest accuracy to mean 0.2688)”
+
+    Variant: Attn
+
+        ✅ Representative Seed: 0
+
+        ✅ “Representative Seed: 0 (Closest accuracy to mean 0.2358)” block
+
+    Baseline: GAT
+
+        ✅ Average of GAT values from four runs (seeds: 6, 5, 12, 7) — i.e., the corresponding GATs in the 4 comparisons
+

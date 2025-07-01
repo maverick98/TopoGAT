@@ -1,0 +1,65 @@
+ Saved summary to /content/drive/MyDrive/topogat/MUTAG/attn/summary_topogat.csv
+ Saved summary to /content/drive/MyDrive/topogat/MUTAG/attn/summary_gat.csv
+ Exported LaTeX table to /content/drive/MyDrive/topogat/MUTAG/attn/topogat_table.tex
+ Exported LaTeX table to /content/drive/MyDrive/topogat/MUTAG/attn/gat_table.tex
+ Exported comparison summary to /content/drive/MyDrive/topogat/MUTAG/attn/comparison_summary.csv
+ Representative Seed: 11 (Closest accuracy to mean 0.7934)
+ Representative Metrics: {'accuracy': 0.7894736842105263, 'precision': 0.791304347826087, 'recall': 0.7815126050420168, 'f1': 0.7840909090909092, 'roc_auc': np.float64(0.9075630252100839), 'log_loss': 0.3525717504827954}
+ Representative Seed: 1 (Closest accuracy to mean 0.7513)
+ Representative Metrics: {'accuracy': 0.7631578947368421, 'precision': 0.7995391705069124, 'recall': 0.6934523809523809, 'f1': 0.7038961038961038, 'roc_auc': np.float64(0.8571428571428571), 'log_loss': 0.4917500563635202}
+
+Classification Report:
+
+              precision    recall  f1-score   support
+
+           0       0.83      0.77      0.80        13
+           1       0.88      0.92      0.90        25
+
+    accuracy                           0.87        38
+   macro avg       0.86      0.84      0.85        38
+weighted avg       0.87      0.87      0.87        38
+
+ Saved confusion matrix to /content/drive/MyDrive/topogat/MUTAG/attn/seed_11/confusion_topogat_rep_11.png
+ Saved PR curve to /content/drive/MyDrive/topogat/MUTAG/attn/seed_11/pr_curve_topogat_rep_11.png
+
+Classification Report:
+
+              precision    recall  f1-score   support
+
+           0       0.83      0.31      0.45        16
+           1       0.66      0.95      0.78        22
+
+    accuracy                           0.68        38
+   macro avg       0.74      0.63      0.62        38
+weighted avg       0.73      0.68      0.64        38
+
+ Saved confusion matrix to /content/drive/MyDrive/topogat/MUTAG/attn/seed_1/confusion_gat_rep_1.png
+ Saved PR curve to /content/drive/MyDrive/topogat/MUTAG/attn/seed_1/pr_curve_gat_rep_1.png
+Saved statistical comparison to /content/drive/MyDrive/topogat/MUTAG/attn/paired_ttest_results.txt
+Saved boxplot to /content/drive/MyDrive/topogat/MUTAG/attn/metric_comparison_boxplot.png
+
+All analysis completed and saved.
+----- Paired T-Test Results -----
+===== Paired t-tests on TopoGAT vs GAT for accuracy =====
+T=3.6555, p-value=0.0017, Cohen's d=0.5993
+
+===== Paired t-tests on TopoGAT vs GAT for precision =====
+T=3.5583, p-value=0.0021, Cohen's d=0.5994
+
+===== Paired t-tests on TopoGAT vs GAT for recall =====
+T=3.4810, p-value=0.0025, Cohen's d=0.6527
+
+===== Paired t-tests on TopoGAT vs GAT for f1 =====
+T=3.5244, p-value=0.0023, Cohen's d=0.5924
+
+
+
+----- Comparison Summary (CSV) -----
+,TopoGAT,GAT
+accuracy,0.7934 ± 0.0721,0.7513 ± 0.0680
+precision,0.7902 ± 0.0912,0.7369 ± 0.0896
+recall,0.7421 ± 0.0951,0.6817 ± 0.0660
+f1,0.7441 ± 0.0961,0.6886 ± 0.0774
+roc_auc,0.8928 ± 0.0571,0.7973 ± 0.0536
+log_loss,0.4182 ± 0.1143,0.5273 ± 0.0813
+

@@ -1,0 +1,79 @@
+ Saved summary to /content/drive/MyDrive/topogat/ENZYMES/attn/summary_topogat.csv
+ Saved summary to /content/drive/MyDrive/topogat/ENZYMES/attn/summary_gat.csv
+ Exported LaTeX table to /content/drive/MyDrive/topogat/ENZYMES/attn/topogat_table.tex
+ Exported LaTeX table to /content/drive/MyDrive/topogat/ENZYMES/attn/gat_table.tex
+ Exported comparison summary to /content/drive/MyDrive/topogat/ENZYMES/attn/comparison_summary.csv
+ Representative Seed: 0 (Closest accuracy to mean 0.2358)
+ Representative Metrics: {'accuracy': 0.23333333333333334, 'precision': 0.18244623310412786, 'recall': 0.2453659401027822, 'f1': 0.20056903496766973, 'roc_auc': np.float64(0.6236885925116946), 'log_loss': 1.7319074232175329}
+ Representative Seed: 7 (Closest accuracy to mean 0.2004)
+ Representative Metrics: {'accuracy': 0.2, 'precision': 0.12045003813882532, 'recall': 0.18919753086419755, 'f1': 0.14415064102564104, 'roc_auc': np.float64(0.5499741684797828), 'log_loss': 1.81647844702287}
+
+Classification Report:
+
+              precision    recall  f1-score   support
+
+           0       0.16      0.16      0.16        19
+           1       0.22      0.20      0.21        20
+           2       0.29      0.44      0.35        18
+           3       0.15      0.09      0.11        22
+           4       0.00      0.00      0.00        22
+           5       0.28      0.58      0.37        19
+
+    accuracy                           0.23       120
+   macro avg       0.18      0.25      0.20       120
+weighted avg       0.18      0.23      0.19       120
+
+ Saved confusion matrix to /content/drive/MyDrive/topogat/ENZYMES/attn/seed_0/confusion_topogat_rep_0.png
+ Saved PR curve to /content/drive/MyDrive/topogat/ENZYMES/attn/seed_0/pr_curve_topogat_rep_0.png
+
+Classification Report:
+
+/usr/local/lib/python3.11/dist-packages/sklearn/metrics/_classification.py:1565: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/usr/local/lib/python3.11/dist-packages/sklearn/metrics/_classification.py:1565: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/usr/local/lib/python3.11/dist-packages/sklearn/metrics/_classification.py:1565: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+              precision    recall  f1-score   support
+
+           0       0.00      0.00      0.00        17
+           1       0.11      0.26      0.15        19
+           2       0.31      0.33      0.32        24
+           3       0.00      0.00      0.00        18
+           4       0.43      0.15      0.22        20
+           5       0.17      0.32      0.22        22
+
+    accuracy                           0.19       120
+   macro avg       0.17      0.18      0.15       120
+weighted avg       0.18      0.19      0.17       120
+
+ Saved confusion matrix to /content/drive/MyDrive/topogat/ENZYMES/attn/seed_7/confusion_gat_rep_7.png
+ Saved PR curve to /content/drive/MyDrive/topogat/ENZYMES/attn/seed_7/pr_curve_gat_rep_7.png
+Saved statistical comparison to /content/drive/MyDrive/topogat/ENZYMES/attn/paired_ttest_results.txt
+Saved boxplot to /content/drive/MyDrive/topogat/ENZYMES/attn/metric_comparison_boxplot.png
+
+All analysis completed and saved.
+----- Paired T-Test Results -----
+===== Paired t-tests on TopoGAT vs GAT for accuracy =====
+T=3.8808, p-value=0.0010, Cohen's d=0.8860
+
+===== Paired t-tests on TopoGAT vs GAT for precision =====
+T=4.4635, p-value=0.0003, Cohen's d=0.9568
+
+===== Paired t-tests on TopoGAT vs GAT for recall =====
+T=3.3444, p-value=0.0034, Cohen's d=0.8008
+
+===== Paired t-tests on TopoGAT vs GAT for f1 =====
+T=5.1307, p-value=0.0001, Cohen's d=1.0246
+
+
+
+----- Comparison Summary (CSV) -----
+,TopoGAT,GAT
+accuracy,0.2358 ± 0.0410,0.2004 ± 0.0350
+precision,0.2059 ± 0.0616,0.1485 ± 0.0414
+recall,0.2420 ± 0.0358,0.2140 ± 0.0330
+f1,0.1886 ± 0.0430,0.1456 ± 0.0298
+roc_auc,0.6000 ± 0.0224,0.5623 ± 0.0196
+log_loss,1.7550 ± 0.0370,1.7856 ± 0.0320
+

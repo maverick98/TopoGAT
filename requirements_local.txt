@@ -1,0 +1,10 @@
+torch==2.6.0
+torch-geometric==2.6.1
+scikit-learn==1.6.1
+gudhi==3.11.0
+PyYAML==6.0.2
+wandb==0.20.1
+unittest2==1.1.0
+matplotlib==3.10.0
+networkx==3.5
+numpy==2.0.2

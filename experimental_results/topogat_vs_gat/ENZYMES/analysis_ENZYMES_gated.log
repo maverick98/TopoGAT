@@ -1,0 +1,85 @@
+ Saved summary to /content/drive/MyDrive/topogat/ENZYMES/gated/summary_topogat.csv
+ Saved summary to /content/drive/MyDrive/topogat/ENZYMES/gated/summary_gat.csv
+ Exported LaTeX table to /content/drive/MyDrive/topogat/ENZYMES/gated/topogat_table.tex
+ Exported LaTeX table to /content/drive/MyDrive/topogat/ENZYMES/gated/gat_table.tex
+ Exported comparison summary to /content/drive/MyDrive/topogat/ENZYMES/gated/comparison_summary.csv
+ Representative Seed: 6 (Closest accuracy to mean 0.2688)
+ Representative Metrics: {'accuracy': 0.26666666666666666, 'precision': 0.2535894660894661, 'recall': 0.2540821751348067, 'f1': 0.21267239136091595, 'roc_auc': np.float64(0.6079884966893058), 'log_loss': 1.7354034964781977}
+ Representative Seed: 12 (Closest accuracy to mean 0.2012)
+ Representative Metrics: {'accuracy': 0.20833333333333334, 'precision': 0.1869087702421036, 'recall': 0.20958646616541354, 'f1': 0.14673164613605352, 'roc_auc': np.float64(0.5585549403285083), 'log_loss': 1.783959995362635}
+
+Classification Report:
+
+/usr/local/lib/python3.11/dist-packages/sklearn/metrics/_classification.py:1565: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/usr/local/lib/python3.11/dist-packages/sklearn/metrics/_classification.py:1565: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/usr/local/lib/python3.11/dist-packages/sklearn/metrics/_classification.py:1565: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+              precision    recall  f1-score   support
+
+           0       0.00      0.00      0.00        17
+           1       0.17      0.11      0.13        19
+           2       0.38      0.33      0.36        24
+           3       0.20      0.50      0.29        18
+           4       0.00      0.00      0.00        20
+           5       0.24      0.45      0.32        22
+
+    accuracy                           0.24       120
+   macro avg       0.17      0.23      0.18       120
+weighted avg       0.18      0.24      0.19       120
+
+ Saved confusion matrix to /content/drive/MyDrive/topogat/ENZYMES/gated/seed_6/confusion_topogat_rep_6.png
+ Saved PR curve to /content/drive/MyDrive/topogat/ENZYMES/gated/seed_6/pr_curve_topogat_rep_6.png
+
+Classification Report:
+
+/usr/local/lib/python3.11/dist-packages/sklearn/metrics/_classification.py:1565: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/usr/local/lib/python3.11/dist-packages/sklearn/metrics/_classification.py:1565: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+/usr/local/lib/python3.11/dist-packages/sklearn/metrics/_classification.py:1565: UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, f"{metric.capitalize()} is", len(result))
+              precision    recall  f1-score   support
+
+           0       0.00      0.00      0.00        22
+           1       0.27      0.58      0.37        19
+           2       0.00      0.00      0.00        21
+           3       0.25      0.62      0.35        21
+           4       0.28      0.44      0.34        16
+           5       0.00      0.00      0.00        21
+
+    accuracy                           0.26       120
+   macro avg       0.13      0.27      0.18       120
+weighted avg       0.12      0.26      0.17       120
+
+ Saved confusion matrix to /content/drive/MyDrive/topogat/ENZYMES/gated/seed_12/confusion_gat_rep_12.png
+ Saved PR curve to /content/drive/MyDrive/topogat/ENZYMES/gated/seed_12/pr_curve_gat_rep_12.png
+Saved statistical comparison to /content/drive/MyDrive/topogat/ENZYMES/gated/paired_ttest_results.txt
+Saved boxplot to /content/drive/MyDrive/topogat/ENZYMES/gated/metric_comparison_boxplot.png
+
+All analysis completed and saved.
+----- Paired T-Test Results -----
+===== Paired t-tests on TopoGAT vs GAT for accuracy =====
+T=7.0347, p-value=0.0000, Cohen's d=2.2740
+
+===== Paired t-tests on TopoGAT vs GAT for precision =====
+T=5.7499, p-value=0.0000, Cohen's d=2.3084
+
+===== Paired t-tests on TopoGAT vs GAT for recall =====
+T=6.4882, p-value=0.0000, Cohen's d=1.8282
+
+===== Paired t-tests on TopoGAT vs GAT for f1 =====
+T=8.5288, p-value=0.0000, Cohen's d=2.5352
+
+
+
+----- Comparison Summary (CSV) -----
+,TopoGAT,GAT
+accuracy,0.2688 ± 0.0305,0.2012 ± 0.0319
+precision,0.2754 ± 0.0487,0.1659 ± 0.0627
+recall,0.2682 ± 0.0297,0.2153 ± 0.0248
+f1,0.2344 ± 0.0362,0.1448 ± 0.0284
+roc_auc,0.6204 ± 0.0263,0.5635 ± 0.0242
+log_loss,1.7562 ± 0.0548,1.7814 ± 0.0300
+

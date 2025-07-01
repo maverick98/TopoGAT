@@ -1,0 +1,65 @@
+ Saved summary to /content/drive/MyDrive/topogat/PROTEINS/gated/summary_topogat.csv
+ Saved summary to /content/drive/MyDrive/topogat/PROTEINS/gated/summary_gat.csv
+ Exported LaTeX table to /content/drive/MyDrive/topogat/PROTEINS/gated/topogat_table.tex
+ Exported LaTeX table to /content/drive/MyDrive/topogat/PROTEINS/gated/gat_table.tex
+ Exported comparison summary to /content/drive/MyDrive/topogat/PROTEINS/gated/comparison_summary.csv
+ Representative Seed: 2 (Closest accuracy to mean 0.7090)
+ Representative Metrics: {'accuracy': 0.7085201793721974, 'precision': 0.7198908730158731, 'recall': 0.6817995406824147, 'f1': 0.6823570661582626, 'roc_auc': np.float64(0.7468011811023623), 'log_loss': 0.5640001301809978}
+ Representative Seed: 3 (Closest accuracy to mean 0.6417)
+ Representative Metrics: {'accuracy': 0.6412556053811659, 'precision': 0.6442167974426039, 'recall': 0.5826257076257076, 'f1': 0.5617138364779874, 'roc_auc': np.float64(0.521062271062271), 'log_loss': 0.6614470661035353}
+
+Classification Report:
+
+              precision    recall  f1-score   support
+
+           0       0.70      0.86      0.77       133
+           1       0.68      0.46      0.55        90
+
+    accuracy                           0.70       223
+   macro avg       0.69      0.66      0.66       223
+weighted avg       0.69      0.70      0.68       223
+
+ Saved confusion matrix to /content/drive/MyDrive/topogat/PROTEINS/gated/seed_2/confusion_topogat_rep_2.png
+ Saved PR curve to /content/drive/MyDrive/topogat/PROTEINS/gated/seed_2/pr_curve_topogat_rep_2.png
+
+Classification Report:
+
+              precision    recall  f1-score   support
+
+           0       0.64      0.86      0.74       133
+           1       0.59      0.29      0.39        90
+
+    accuracy                           0.63       223
+   macro avg       0.62      0.58      0.56       223
+weighted avg       0.62      0.63      0.60       223
+
+ Saved confusion matrix to /content/drive/MyDrive/topogat/PROTEINS/gated/seed_3/confusion_gat_rep_3.png
+ Saved PR curve to /content/drive/MyDrive/topogat/PROTEINS/gated/seed_3/pr_curve_gat_rep_3.png
+Saved statistical comparison to /content/drive/MyDrive/topogat/PROTEINS/gated/paired_ttest_results.txt
+Saved boxplot to /content/drive/MyDrive/topogat/PROTEINS/gated/metric_comparison_boxplot.png
+
+All analysis completed and saved.
+----- Paired T-Test Results -----
+===== Paired t-tests on TopoGAT vs GAT for accuracy =====
+T=12.1624, p-value=0.0000, Cohen's d=2.5286
+
+===== Paired t-tests on TopoGAT vs GAT for precision =====
+T=10.0679, p-value=0.0000, Cohen's d=1.8122
+
+===== Paired t-tests on TopoGAT vs GAT for recall =====
+T=13.1832, p-value=0.0000, Cohen's d=2.6614
+
+===== Paired t-tests on TopoGAT vs GAT for f1 =====
+T=12.3801, p-value=0.0000, Cohen's d=2.8343
+
+
+
+----- Comparison Summary (CSV) -----
+,TopoGAT,GAT
+accuracy,0.7090 ± 0.0273,0.6417 ± 0.0215
+precision,0.7190 ± 0.0514,0.6282 ± 0.0522
+recall,0.6613 ± 0.0313,0.5801 ± 0.0280
+f1,0.6609 ± 0.0345,0.5654 ± 0.0326
+roc_auc,0.7072 ± 0.0411,0.5458 ± 0.0430
+log_loss,0.5986 ± 0.0357,0.6583 ± 0.0122
+
