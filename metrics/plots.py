@@ -1,59 +1,104 @@
-# metrics/plots.py
-import matplotlib.pyplot as plt
+#metrics/plots.py
 import seaborn as sns
+import matplotlib.pyplot as plt
+import pandas as pd
 import numpy as np
-from sklearn.metrics import (
-    confusion_matrix,
-    precision_recall_curve,
-    average_precision_score
-)
 
-def plot_confusion(y_true, y_pred, class_names=None, save_path=None):
-    """
-    Plots and optionally saves a confusion matrix.
 
-    Args:
-        y_true (array-like): Ground truth labels.
-        y_pred (array-like): Predicted labels.
-        class_names (list, optional): Class labels for the axis.
-        save_path (str, optional): Path to save the plot.
+def plot_boxplot(df, metric, group_col='model', ax=None, show=True, title=None):
     """
-    cm = confusion_matrix(y_true, y_pred)
-    plt.figure(figsize=(6, 5))
-    sns.heatmap(cm, annot=True, fmt="d", cmap="Blues", xticklabels=class_names, yticklabels=class_names)
-    plt.xlabel("Predicted")
-    plt.ylabel("True")
-    plt.title("Confusion Matrix")
-    plt.tight_layout()
-    if save_path:
-        plt.savefig(save_path)
-    plt.close()
+    Plots a boxplot of a metric grouped by a categorical column.
+    """
+    if ax is None:
+        _, ax = plt.subplots(figsize=(8, 6))
 
-def plot_precision_recall(y_true, y_score, save_path=None):
-    """
-    Plots and optionally saves the Precision-Recall curve.
+    sns.boxplot(x=group_col, y=metric, data=df, ax=ax)
+    ax.set_title(title or f'Distribution of {metric} by {group_col}')
+    ax.set_ylabel(metric)
+    ax.set_xlabel(group_col)
 
-    Args:
-        y_true (array-like): Ground truth labels.
-        y_score (array-like): Probability scores.
-        save_path (str, optional): Path to save the plot.
+    if show:
+        plt.tight_layout()
+        plt.show()
+
+
+def plot_effect_sizes(effect_dict, ax=None, show=True, title="Effect Sizes (Pillai's Trace)"):
     """
-    plt.figure(figsize=(6, 5))
-    if y_score.ndim == 2 and y_score.shape[1] > 1:
-        for i in range(y_score.shape[1]):
-            precision, recall, _ = precision_recall_curve((np.array(y_true) == i).astype(int), y_score[:, i])
-            ap = average_precision_score((np.array(y_true) == i).astype(int), y_score[:, i])
-            plt.plot(recall, precision, label=f"Class {i} (AP={ap:.2f})")
+    Plots a bar chart of effect sizes per metric.
+    """
+    if not effect_dict:
+        return
+
+    metrics = list(effect_dict.keys())
+    values = [effect_dict[m] for m in metrics]
+
+    if ax is None:
+        _, ax = plt.subplots(figsize=(8, 6))
+
+    sns.barplot(x=metrics, y=values, ax=ax)
+    ax.set_title(title)
+    ax.set_ylabel("Effect Size (Pillai's Trace)")
+    ax.set_xlabel("Metric")
+    plt.xticks(rotation=45)
+
+    if show:
+        plt.tight_layout()
+        plt.show()
+
+
+def plot_posthoc_heatmap(pval_matrix, ax=None, show=True, title="Posthoc p-values (Tukey HSD)"):
+    """
+    Plots a heatmap of pairwise p-values for a given metric.
+    """
+    if ax is None:
+        _, ax = plt.subplots(figsize=(8, 6))
+
+    sns.heatmap(pval_matrix, annot=True, fmt=".3f", cmap="coolwarm", ax=ax)
+    ax.set_title(title)
+    plt.xticks(rotation=45)
+    plt.yticks(rotation=0)
+
+    if show:
+        plt.tight_layout()
+        plt.show()
+
+
+def plot_normality_pvalues(results_dict, ax=None, show=True, title="Normality Test (Shapiro-Wilk p-values)"):
+    """
+    Plots Shapiro-Wilk test p-values per group.
+    """
+    groups = list(results_dict.keys())
+    p_values = [results_dict[g]['p_value'] if results_dict[g]['p_value'] is not None else np.nan for g in groups]
+
+    if ax is None:
+        _, ax = plt.subplots(figsize=(8, 6))
+
+    sns.barplot(x=groups, y=p_values, ax=ax)
+    ax.set_title(title)
+    ax.set_ylabel("Shapiro-Wilk p-value")
+    ax.set_xlabel("Group")
+    plt.xticks(rotation=45)
+    ax.axhline(0.05, color="red", linestyle="--", label="α = 0.05")
+    ax.legend()
+
+    if show:
+        plt.tight_layout()
+        plt.show()
+
+
+def plot_levene_result(result_dict):
+    """
+    Prints result of Levene's test and provides interpretation.
+    """
+    stat = result_dict.get("statistic")
+    pval = result_dict.get("p_value")
+    note = result_dict.get("note", "")
+
+    if stat is None or pval is None:
+        print(f"Levene's Test could not be computed: {note}")
     else:
-        precision, recall, _ = precision_recall_curve(y_true, y_score)
-        ap = average_precision_score(y_true, y_score)
-        plt.plot(recall, precision, label=f"AP={ap:.2f}")
-
-    plt.xlabel("Recall")
-    plt.ylabel("Precision")
-    plt.title("Precision-Recall Curve")
-    plt.legend()
-    plt.tight_layout()
-    if save_path:
-        plt.savefig(save_path)
-    plt.close()
+        print(f"Levene’s Test statistic = {stat:.4f}, p-value = {pval:.4f}")
+        if pval < 0.05:
+            print("→ ⚠️ Variances are significantly different (heteroscedasticity).")
+        else:
+            print("→ ✅ Variances are not significantly different (homoscedasticity).")

@@ -1,12 +1,37 @@
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, roc_auc_score
+# metrics/core.py
+from sklearn.metrics import (
+    accuracy_score,
+    precision_score,
+    recall_score,
+    f1_score,
+    roc_auc_score
+)
+from typing import Optional, Dict, Any
+import numpy as np
+from utils.logger import get_logger
 
-def compute_classification_metrics(y_true, y_pred, y_prob=None, average="macro"):
+logger = get_logger(__name__)
+
+
+def compute_classification_metrics(
+    y_true,
+    y_pred,
+    y_prob: Optional[np.ndarray] = None,
+    average: str = "macro"
+) -> Dict[str, Any]:
     """
     Computes standard classification metrics.
 
+    Args:
+        y_true (array-like): Ground truth labels.
+        y_pred (array-like): Predicted labels.
+        y_prob (array-like, optional): Predicted probabilities for ROC-AUC.
+        average (str): Averaging method for multi-class metrics.
+
     Returns:
-        dict: accuracy, precision, recall, f1, roc_auc (optional)
+        dict: Dictionary with accuracy, precision, recall, F1, and optionally ROC-AUC.
     """
+    logger.info("Computing classification metrics.")
     metrics = {
         "accuracy": accuracy_score(y_true, y_pred),
         "precision": precision_score(y_true, y_pred, average=average, zero_division=0),
@@ -16,6 +41,7 @@ def compute_classification_metrics(y_true, y_pred, y_prob=None, average="macro")
     if y_prob is not None:
         try:
             metrics["roc_auc"] = roc_auc_score(y_true, y_prob, multi_class="ovr")
-        except ValueError:
+        except ValueError as e:
+            logger.warning(f"ROC AUC computation failed: {e}")
             metrics["roc_auc"] = None
     return metrics

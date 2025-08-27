@@ -1,3 +1,4 @@
+#trainers/graph_trainer.py
 import torch
 import torch.nn.functional as F
 from torch_geometric.loader import DataLoader
@@ -9,21 +10,26 @@ from datasets.graph_dataset import GraphTopoDataset
 logger = logging.getLogger(__name__)
 
 class GraphTrainer:
-    def __init__(self, dataset_name, topo_dim=8, seed=42):
+    def __init__(self, config, seed=42):
+        print(f"[INFO ] config = {config}")
         self.seed = seed
-        self.dataset_name = dataset_name
-        self.dataset = GraphTopoDataset(dataset_name, topo_dim=topo_dim, seed=seed)
+        self.config = config
+        self.dataset_name = config['dataset']
+        self.dataset = GraphTopoDataset(self.dataset_name, topo_dim=config['topo_dim'], seed=seed)
         self.train_loader, self.test_loader = self.dataset.get_loaders(seed=seed)
         self.sample = self.dataset.graphs[0]
         if not hasattr(self.sample, 'topo'):
             self.sample.topo = self.dataset.topo_features[0]
+        print(f'actual_topo_dim {self.dataset.actual_topo_dim}')    
         self.topo_dim = self.dataset.actual_topo_dim
+
 
     def train_and_eval_model(self, model, label):
         logger.info(f"\n[Training {label}]")
-        optimizer = torch.optim.Adam(model.parameters(), lr=0.01, weight_decay=5e-4)
+        optimizer = torch.optim.Adam(model.parameters(), lr=self.config['learning_rate'], weight_decay=self.config['weight_decay'])
 
-        for epoch in range(1, 101):
+        for epoch in range(1, self.config['epochs'] + 1):
+
             loss = self.train_one_epoch(model, optimizer)
             if epoch % 10 == 0 or epoch == 1:
                 logger.info(f"Epoch {epoch}, Loss: {loss:.4f}")

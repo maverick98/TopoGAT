@@ -7,7 +7,9 @@ OUTPUT_FILE="project_structure.txt"
 echo "Project structure under: $ROOT_DIR"
 echo "---------------------------------" | tee "$OUTPUT_FILE"
 
-find "$ROOT_DIR" -type d -name "__pycache__" -prune -o -type f -not -path "*/.*" | \
+find "$ROOT_DIR" \
+  \( -type d \( -name "__pycache__" -o -name "topogat-env" -o -name "experimental_results" \) -prune \) -o \
+  -type f ! -name "*.png" ! -path "*/.*" -print | \
 awk -v root="$ROOT_DIR" '
 {
   sub(root"/", "", $0)

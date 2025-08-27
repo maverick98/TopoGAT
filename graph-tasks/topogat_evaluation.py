@@ -1,50 +1,39 @@
-# topogat_evaluation.py
-# Evaluates TopoGAT vs GAT with statistical testing, visualizations, and CSV export
-# Evaluates TopoGAT vs GIN with statistical testing, visualizations, and CSV export
-
 import sys
 import os
 import argparse
-import torch
-import numpy as np
-import random
-import pandas as pd
-from scipy.stats import ttest_rel
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
-import matplotlib.pyplot as plt
+from utils.config import load_config
 
 ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 if ROOT_DIR not in sys.path:
     sys.path.insert(0, ROOT_DIR)
 
-from experiments.topogat_experiment import TopoGATvsGATExperiment
-from experiments.topogat_experiment import TopoGATvsGINExperiment
+from experiments.topogat_vs_gat import TopoGATvsGATExperiment
+from experiments.topogin_vs_gin import TopoGINvsGINExperiment
 
 
-def peform_topogat_vs_gat_experiment(dataset_name, variant):
-    print(f"Running  TopoGATvsGATExperiment experiment on {dataset_name} with variant '{variant}'")
-    experiment = TopoGATvsGATExperiment(dataset_name=dataset_name, variant=variant)
+def perform_experiment(config, variant, base):
+    if base.lower() == "gat":   
+        run_experiment(TopoGATvsGATExperiment, config, variant, base)
+    elif base.lower() == "gin":
+        run_experiment(TopoGINvsGINExperiment, config, variant, base)
+    else:
+        raise ValueError(f"Unsupported base model '{base}'. Use 'gat' or 'gin'.")
+
+def run_experiment(experiment_class, config, variant, base):
+    print(f"Running {experiment_class.__name__} on dataset '{config['dataset']}' with variant '{variant}'")
+    experiment = experiment_class(config=config, variant=variant)
     experiment.run()
     experiment.analyze()
-    
-def peform_topogat_vs_gin_experiment(dataset_name, variant):
-    print(f"Running  TopoGATvsGINExperiment experiment on {dataset_name} with variant '{variant}'")
-    experiment = TopoGATvsGINExperiment(dataset_name=dataset_name, variant=variant)
-    experiment.run()
-    experiment.analyze()
-
-def peform_experiment(dataset_name, variant,base):
-    if base == "gat":
-        peform_topogat_vs_gat_experiment(dataset_name, variant)
-    if base == "gin":
-        peform_topogat_vs_gin_experiment(dataset_name, variant)
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Run TopoGAT experiments.")
-    parser.add_argument("dataset_name", type=str, help="Name of the dataset (e.g., MUTAG, PTC_MR,PROTEINS,ENZYMES)")
-    parser.add_argument("--variant", type=str, default="basic", help="TopoGAT variant to use")
-    parser.add_argument("--base", type=str, default="gat", help="Baseline variant to use")
+    parser = argparse.ArgumentParser(description="Run TopoGAT or TopoGIN experiments.")
+    parser.add_argument("dataset_name", type=str, help="Name of the dataset (e.g., MUTAG, PROTEINS, ENZYMES)")
+    parser.add_argument("--variant", type=str, default="basic", help="Variant of Topo model to use (e.g., concat, attn)")
+    parser.add_argument("--base", type=str, default="gat", help="Baseline model: 'gat' or 'gin'")
     args = parser.parse_args()
 
-    peform_experiment(args.dataset_name, args.variant , args.base)
+    config = load_config()
+    config['dataset'] = args.dataset_name  # override dataset name from YAML
+
+    perform_experiment(config, args.variant, args.base)

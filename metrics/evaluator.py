@@ -1,27 +1,18 @@
+# metrics/evaluator.py
+import os
 import torch
 import numpy as np
 import pandas as pd
-import os
-from sklearn.metrics import (
-    classification_report,
-    accuracy_score,
-    precision_score,
-    recall_score,
-    f1_score,
-    roc_auc_score,
-    log_loss
-)
-from .scoring import compute_classification_metrics
-from .plots import plot_confusion, plot_precision_recall
+from sklearn.metrics import classification_report, roc_auc_score, log_loss
+from .core import compute_classification_metrics
+from utils.logger import get_logger
+from utils.metrics import plot_confusion,plot_precision_recall
 import wandb
+
+logger = get_logger(__name__)
 
 
 class ModelEvaluator:
-    """
-    A reusable evaluator class for computing classification metrics
-    and optionally saving visualizations like confusion matrix and PR curves.
-    """
-
     def __init__(self, model, data_loader, class_names=None):
         self.model = model
         self.loader = data_loader
@@ -29,6 +20,7 @@ class ModelEvaluator:
 
     def evaluate(self, verbose=False, save_confusion_path=None, save_pr_path=None,
                  log_to_wandb=False, wandb_prefix=""):
+
         self.model.eval()
         y_true, y_pred, y_prob = [], [], []
 
@@ -52,25 +44,25 @@ class ModelEvaluator:
                 metrics["roc_auc"] = roc_auc_score(y_true_np, y_prob_np[:, 1])
             else:
                 metrics["roc_auc"] = roc_auc_score(y_true_np, y_prob_np, multi_class="ovr")
-        except:
+        except Exception as e:
+            logger.warning(f"ROC AUC computation failed: {e}")
             metrics["roc_auc"] = None
 
         try:
             metrics["log_loss"] = log_loss(y_true_np, y_prob_np)
-        except:
+        except Exception as e:
+            logger.warning(f"Log loss computation failed: {e}")
             metrics["log_loss"] = None
 
-        # Remove deprecated or inconsistent auroc if exists
         metrics.pop("auroc", None)
 
         if self.class_names is None:
-            num_classes = len(set(y_true))
-            self.class_names = [str(i) for i in range(num_classes)]
+            self.class_names = [str(i) for i in sorted(set(y_true))]
 
         if save_confusion_path:
             plot_confusion(y_true, y_pred, class_names=self.class_names, save_path=save_confusion_path)
         if save_pr_path:
-            plot_precision_recall(y_true, np.array(y_prob), save_path=save_pr_path)
+            plot_precision_recall(y_true, y_prob_np, save_path=save_pr_path)
 
         if verbose:
             print("\nClassification Report:\n")
@@ -86,6 +78,8 @@ class ModelEvaluator:
         return metrics
 
 
+# --- Utilities ---
+
 def summarize_experiment_results(results_list, output_csv_path):
     df = pd.DataFrame(results_list)
     summary_df = df.agg(['mean', 'std']).T
@@ -94,7 +88,7 @@ def summarize_experiment_results(results_list, output_csv_path):
         lambda row: f"{row['mean']:.4f} ± {row['std']:.4f}", axis=1
     )
     summary_df.to_csv(output_csv_path)
-    print(f" Saved summary to {output_csv_path}")
+    logger.info(f"Saved summary to {output_csv_path}")
     return summary_df
 
 
@@ -102,14 +96,14 @@ def export_latex_table(summary_df, output_path, model_name="Model"):
     latex_str = summary_df[['summary']].to_latex(header=[model_name])
     with open(output_path, 'w') as f:
         f.write(latex_str)
-    print(f" Exported LaTeX table to {output_path}")
+    logger.info(f"Exported LaTeX table to {output_path}")
 
 
 def export_csv_summary(summary_topo, summary_gat, output_path):
     df_combined = pd.concat([summary_topo[['summary']], summary_gat[['summary']]], axis=1)
     df_combined.columns = ['TopoGAT', 'GAT']
     df_combined.to_csv(output_path)
-    print(f" Exported comparison summary to {output_path}")
+    logger.info(f"Exported comparison summary to {output_path}")
 
 
 def pick_representative_seed(results_list, metric='accuracy'):
@@ -119,8 +113,8 @@ def pick_representative_seed(results_list, metric='accuracy'):
     mean_val = df[metric].mean()
     df['distance'] = np.abs(df[metric] - mean_val)
     idx = df['distance'].idxmin()
-    print(f" Representative Seed: {idx} (Closest {metric} to mean {mean_val:.4f})")
-    print(f" Representative Metrics: {results_list[idx]}")
+    logger.info(f"Representative Seed: {idx} (Closest {metric} to mean {mean_val:.4f})")
+    logger.info(f"Representative Metrics: {results_list[idx]}")
     return idx, results_list[idx]
 
 
@@ -138,6 +132,3 @@ def save_visuals_for_representative_seed(model, loader, class_names, seed_label,
         log_to_wandb=log_to_wandb,
         wandb_prefix=wandb_prefix
     )
-
-    print(f" Saved confusion matrix to {confusion_path}")
-    print(f" Saved PR curve to {pr_path}")

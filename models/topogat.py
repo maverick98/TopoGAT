@@ -1,11 +1,12 @@
-import torch  # PyTorch core library for tensors and operations
-import torch.nn.functional as F  # Functional API for layers and activations
-from torch_geometric.nn import global_mean_pool, GATConv  # PyG GNN components: pooling and Graph Attention Convolution
-import torch.nn as nn  # PyTorch neural network module
-import logging  # Standard logging module
-import os  # Filesystem operations
-from abc import ABC, abstractmethod  # Abstract base classes for enforcing method implementation in subclasses
-from models.registry import register_topogat  # Model registry system
+#models/topogat.py
+import torch  
+import torch.nn.functional as F  
+from torch_geometric.nn import global_mean_pool, GATConv  
+import torch.nn as nn 
+import logging  
+import os  
+from abc import ABC, abstractmethod  
+from models.registry import register_topogat  
 
 logger = logging.getLogger(__name__)
 
@@ -15,10 +16,19 @@ class BaseTopoGAT(nn.Module, ABC):
     Encapsulates shared logic for TopoGAT architectures, including projection layers,
     GAT convolutional layers, and classification head. Subclasses must define fusion strategy.
     """
-    def __init__(self, input_dim, topo_dim, hidden_dim=64, num_classes=2, heads=1):
+    def __init__(self, input_dim, topo_dim, hidden_dim=64, num_classes=2, heads=1, dropout=0.2):
+    #def __init__(self, *, input_dim, topo_dim, hidden_dim, num_classes, heads=1, dropout=0.2):
+
+    
         super().__init__()
+        self.dropout = dropout
+
         self.hidden_dim = hidden_dim
 
+        print(f"[DEBUG] BaseTopoGAT.__init__(): input_dim={input_dim}, type={type(input_dim)}")
+        print(f"[DEBUG] x_proj: in={input_dim} -> hidden={self.hidden_dim}")
+        print(f"[DEBUG] topo_proj: in={topo_dim} -> hidden={self.hidden_dim}")
+        
         self.topo_proj = nn.Linear(topo_dim, hidden_dim)  # Projects topological features to hidden_dim
         self.x_proj = nn.Linear(input_dim, hidden_dim)  # Projects node features to hidden_dim
 
@@ -26,8 +36,11 @@ class BaseTopoGAT(nn.Module, ABC):
         self.fused_dim = None
         self.gat1 = None
         self.gat2 = None
-
+        print(f'MS debug num_classes is {num_classes}')
         self.classifier = nn.Linear(hidden_dim, num_classes)  # Final classification layer
+
+        print(f"[DEBUG] BaseTopoGAT initialized with: hidden_dim={self.hidden_dim}, dropout={self.dropout}")
+
 
     def finalize_setup(self):
         """
@@ -39,8 +52,8 @@ class BaseTopoGAT(nn.Module, ABC):
             fused = self.fuse_features(dummy, dummy)
             self.fused_dim = fused.size(1)
 
-        self.gat1 = GATConv(self.fused_dim, self.hidden_dim, heads=1, dropout=0.2)
-        self.gat2 = GATConv(self.hidden_dim, self.hidden_dim, concat=False, dropout=0.2)
+        self.gat1 = GATConv(self.fused_dim, self.hidden_dim, heads=1, dropout=self.dropout)
+        self.gat2 = GATConv(self.hidden_dim, self.hidden_dim, concat=False, dropout=self.dropout)
 
     @abstractmethod
     def fuse_features(self, x, topo):
@@ -71,7 +84,7 @@ class BaseTopoGAT(nn.Module, ABC):
         topo = F.relu(self.topo_proj(data.topo))  # Project and activate topological features
         h = self.fuse_features(x, topo)  # Apply subclass-specific fusion
         h = F.elu(self.gat1(h, data.edge_index))  # First GAT layer
-        h = F.dropout(h, p=0.2, training=self.training)  # Dropout for regularization
+        h = F.dropout(h, p=self.dropout, training=self.training)  # Dropout for regularization
         h = self.gat2(h, data.edge_index)  # Second GAT layer
         graph_embed = global_mean_pool(h, data.batch)  # Graph-level representation
         return F.log_softmax(self.classifier(graph_embed), dim=-1)  # Predict class probabilities
@@ -99,7 +112,7 @@ class BaseTopoGAT(nn.Module, ABC):
         except Exception as e:
             logger.warning(f"Failed to extract internal stats: {e}")
 
-@register_topogat("concat")
+@register_topogat("topogat-concat")
 class ConcatTopoGAT(BaseTopoGAT):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -110,7 +123,7 @@ class ConcatTopoGAT(BaseTopoGAT):
             raise ValueError(f"Shape mismatch: x {x.shape}, topo {topo.shape}")
         return torch.cat([x, topo], dim=-1)
 
-@register_topogat("node_aware")
+@register_topogat("topogat-node_aware")
 class NodeAwareTopoGAT(BaseTopoGAT):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -121,7 +134,7 @@ class NodeAwareTopoGAT(BaseTopoGAT):
             raise ValueError(f"Shape mismatch: x {x.shape}, topo {topo.shape}")
         return x * topo + x
 
-@register_topogat("gated")
+@register_topogat("topogat-gated")
 class GatedTopoGAT(BaseTopoGAT):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -133,11 +146,15 @@ class GatedTopoGAT(BaseTopoGAT):
             raise ValueError(f"Shape mismatch: x {x.shape}, topo {topo.shape}")
         gate = torch.sigmoid(self.gate_layer(topo))
         return x * gate + topo * (1 - gate)
-
     def get_last_gate_values(self, topo):
-        return torch.sigmoid(self.gate_layer(topo)).detach().cpu().numpy()
+        """
+        Helper method to extract gate values for testing.
+        """
+        topo_feat = self.topo_proj(topo)  
+        return torch.sigmoid(self.gate_layer(topo_feat)).detach().cpu().numpy()
+    
 
-@register_topogat("attn")
+@register_topogat("topogat-attn")
 class AttentionTopoGAT(BaseTopoGAT):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -160,7 +177,7 @@ class AttentionTopoGAT(BaseTopoGAT):
         joint = torch.cat([x, topo], dim=-1)
         return self.attn_layer(joint).detach().cpu().numpy()
 
-@register_topogat("transformer")
+@register_topogat("topogat-transformer")
 class TopoTransformerGAT(BaseTopoGAT):
     """
     TopoGAT variant using transformer-style scaled dot-product attention for fusion.

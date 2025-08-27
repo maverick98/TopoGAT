@@ -1,34 +1,72 @@
 ---------------------------------
+├── all.log
+├── all_datasets_runner.sh
 ├── analysis.docx
 │   ├── config/config.yaml
 │   ├── datasets/graph_dataset.py
 │   ├── datasets/__init__.py
-│   ├── experiments/topogat_experiment.py
+│   ├── experiments/base_experiment.py
+│   ├── experiments/experiment_utils.py
+│   ├── experiments/topogat_vs_gat.py
+│   ├── experiments/topogin_vs_gin.py
+│   ├── experiments/utils.py
+│   ├── experiments/__init__.py
+├── generate_manova_report.sh
+│   ├── graph-tasks/export_manova_latex_table.py
+│   ├── graph-tasks/generate_manova_summary_html.py
+│   ├── graph-tasks/manova_utils.py
+│   ├── graph-tasks/plot_manova_heatmap.py
+│   ├── graph-tasks/run_joint_manova.py
+│   ├── graph-tasks/run_manova_analysis.py
+│   ├── graph-tasks/run_per_variant_manova.py
+│   ├── graph-tasks/summarize_per_metric_manova_results.py
 │   ├── graph-tasks/topogat_evaluation.py
 ├── LICENSE
+│   ├── metrics/assumption.py
 │   ├── metrics/core.py
 │   ├── metrics/evaluator.py
+│   ├── metrics/manova_analysis.py
+│   ├── metrics/manova_runner.py
 │   ├── metrics/plots.py
-│   ├── metrics/scoring.py
+│   ├── metrics/report_utils.py
+│   ├── metrics/run_per_metric_manova.py
+│   ├── metrics/statistical_tests.py
 │   ├── metrics/statistics.py
+│   ├── metrics/test_plots.py
 │   ├── metrics/__init__.py
 │   ├── models/gat.py
 │   ├── models/gin.py
 │   ├── models/registry.py
 │   ├── models/topogat.py
 │   ├── models/topogat_selector.py
+│   ├── models/topogin.py
+│   ├── models/topogin_selector.py
 │   ├── models/__init__.py
 ├── notes.txt
 ├── project_structure.txt
+├── pytest.ini
 ├── README.md
 ├── requirements.txt
 ├── requirements.yml
+├── requirements_local.txt
+├── runtests.sh
+│   ├── scripts/run_manova_pipeline.py
 ├── setup.py
 ├── show_project_structure.sh
+│   ├── tests/stat_attn.pt
+│   ├── tests/stat_gates.pt
+│   ├── tests/stat_transformer.pt
+│   ├── tests/test_report_utils.py
 │   ├── tests/test_topogat_fusion.py
+│   ├── tests/test_topogat_variants_rigorous.py
+│   ├── tests/test_topogin_fusion.py
+│   ├── tests/test_topogin_variants_rigorous.py
+│   ├── tests/__init__.py
 ├── TopoGAT_1.ipynb
 │   ├── trainers/graph_trainer.py
+│   ├── utils/config.py
 │   ├── utils/logger.py
 │   ├── utils/metrics.py
 │   ├── utils/topology.py
 │   ├── utils/visualizer.py
+│   ├── utils/__init__.py
